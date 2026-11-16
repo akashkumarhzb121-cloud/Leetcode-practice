@@ -1,22 +1,21 @@
 class Solution {
-private:
-    void backtrack(int index, vector<int>& nums, vector<vector<int>>& result){
-        if (index == nums.size()){
-            result.push_back(nums);
-            return;
-        }
-        
-        for (int i=index; i<nums.size(); i++){
-            swap(nums[index], nums[i]);
-            backtrack(index+1, nums, result);
-            swap(nums[index], nums[i]); // Backtrack
-        }
-    }
-
 public:
+   void setPermute(vector<int>& nums,vector<vector<int>>& newVector,int level=0){
+          if(level==nums.size()){
+            newVector.push_back(nums);
+            return;
+          }
+          for(int i=level;i<nums.size();i++){
+             swap(nums[i],nums[level]);
+             setPermute(nums,newVector,level+1);
+             swap(nums[i], nums[level]);
+
+          }
+   }
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> result;
-        backtrack(0, nums, result);
-        return result;
+         vector<vector<int>> vc;
+         int size=nums.size();
+         setPermute(nums,vc);
+         return vc;
     }
 };
