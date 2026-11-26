@@ -1,14 +1,25 @@
 class Solution {
 public:
     vector<int> arrayRankTransform(vector<int>& arr) {
-        vector<int> sortedArr = arr;
-        sort(sortedArr.begin(), sortedArr.end());
-        sortedArr.erase(unique(sortedArr.begin(), sortedArr.end()), sortedArr.end());
+        if(arr.empty()) return {};
 
-        vector<int> result(arr.size());
-        for (size_t i = 0; i < arr.size(); ++i) {
-            result[i] = lower_bound(sortedArr.begin(), sortedArr.end(), arr[i]) - sortedArr.begin() + 1;
+        vector<int>copy=arr;
+        sort(copy.begin(),copy.end());
+
+        unordered_map<int,int>rankmap;
+
+        int rank=1;
+        for(int num:copy){
+            if(rankmap.find(num)==rankmap.end()){
+                rankmap[num]=rank++;
+            }
         }
-        return result;
+
+        for(int i=0;i<arr.size();i++){
+            arr[i]=rankmap[arr[i]];
+        }
+
+        return arr;
+
     }
 };
